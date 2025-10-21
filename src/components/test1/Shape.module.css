@@ -1,0 +1,189 @@
+.shape-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* .controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+
+      &.green {
+        background-color: #34a853;
+      }
+      &.blue {
+        background-color: #4285f4;
+      }
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  } */
+
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    .shape-box {
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 110px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+
+      .shape {
+        background-color: #666;
+        width: 60px;
+        height: 60px;
+
+        &.triangleleft {
+          width: 0;
+          height: 0;
+          border-top: 30px solid transparent;
+          border-bottom: 30px solid transparent;
+          border-right: 50px solid #666;
+          background: none;
+        }
+        &.triangleup {
+          width: 0;
+          height: 0;
+          border-left: 30px solid transparent;
+          border-right: 30px solid transparent;
+          border-bottom: 50px solid #666;
+          background: none;
+        }
+        &.triangledown {
+          width: 0;
+          height: 0;
+          border-left: 30px solid transparent;
+          border-right: 30px solid transparent;
+          border-top: 50px solid #666;
+          background: none;
+        }
+        &.triangleright {
+          width: 0;
+          height: 0;
+          border-top: 30px solid transparent;
+          border-bottom: 30px solid transparent;
+          border-left: 50px solid #666;
+          background: none;
+        }
+      }
+    }
+  }
+
+  .shape-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(120px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    max-width: 800px;
+
+    .shape-grid > div:first-child {
+      visibility: hidden;
+    }
+
+    .shape-grid > div:last-child {
+      visibility: hidden;
+    }
+    .shape-box {
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 110px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      grid-column: span 2;
+
+      .shape {
+        background-color: #666;
+        width: 60px;
+        height: 60px;
+
+        &.circle {
+          border-radius: 50%;
+        }
+        &.square {
+          /* default */
+        }
+        &.pill {
+          width: 80px;
+          height: 30px;
+          border-radius: 9999px;
+        }
+        &.rectangle {
+          width: 90px;
+          height: 50px;
+        }
+        &.oval {
+          width: 80px;
+          height: 50px;
+          border-radius: 50%;
+        }
+        &.diamond {
+          transform: rotate(45deg);
+        }
+        &.rhombus {
+          width: 70px;
+          height: 70px;
+          transform: rotate(30deg);
+        }
+        &.trapezoid {
+          width: 80px;
+          height: 50px;
+          clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+          background-color: #666;
+        }
+        &.parallelogram {
+          width: 90px;
+          height: 50px;
+          transform: skewX(20deg);
+        }
+        &.triangle {
+          width: 0;
+          height: 0;
+          border-left: 30px solid transparent;
+          border-right: 30px solid transparent;
+          border-bottom: 50px solid #666;
+          background: none;
+        }
+        &.hexagon {
+          clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+        }
+        &.ring {
+          background: none;
+          border: 8px solid #999;
+          border-radius: 50%;
+        }
+        &.star {
+          clip-path: polygon(
+            50% 0%,
+            61% 35%,
+            98% 35%,
+            68% 57%,
+            79% 91%,
+            50% 70%,
+            21% 91%,
+            32% 57%,
+            2% 35%,
+            39% 35%
+          );
+        }
+      }
+    }
+  }
+}

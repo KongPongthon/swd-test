@@ -13,16 +13,24 @@ i18next.init({
     en: {
       translation: {
         data: [
-          { name: 'Test 1', des: 'Frontend React' },
-          { name: 'Test 2', des: 'Build SPA with Ant Design' },
+          { name: 'Test 1', des: 'Frontend React', path: 'test1' },
+          {
+            name: 'Test 2',
+            des: 'Build SPA with Ant Design',
+            path: 'test2',
+          },
         ],
       },
     },
     th: {
       translation: {
         data: [
-          { name: 'แบบทดสอบ 1', des: 'Frontend React' },
-          { name: 'แบบทดสอบ 2', des: 'สร้าง SPA ด้วย Ant Design' },
+          { name: 'แบบทดสอบ 1', des: 'Frontend React', path: 'test1' },
+          {
+            name: 'แบบทดสอบ 2',
+            des: 'สร้าง SPA ด้วย Ant Design',
+            path: 'test2',
+          },
         ],
       },
     },
