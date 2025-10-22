@@ -1,0 +1,49 @@
+.form {
+  width: 100%;
+  .sub-box {
+    border: 1px solid black;
+    padding: 10px;
+    width: 100%;
+    .group-text {
+      margin-bottom: 15px;
+      .label {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        .required {
+          color: red;
+        }
+      }
+    }
+  }
+}
+@media screen and (min-width: 1920px) {
+  .form {
+    width: 100%;
+    padding-left: 250px;
+    padding-right: 250px;
+    .sub-box {
+      border: 1px solid black;
+      padding: 10px;
+      width: 100%;
+      .group-text {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        .label {
+          display: flex;
+          white-space: nowrap;
+          width: auto;
+          gap: 10px;
+          align-items: center;
+          margin-left: 10px;
+          .required {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+}

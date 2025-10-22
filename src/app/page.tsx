@@ -5,6 +5,7 @@ import i18next from '@/lib/i18n';
 import { useI18n } from '@/hook/usei18n';
 import { useState } from 'react';
 import ShapeBoard from '../components/test1/ShapeBoard';
+import Form from '@/components/test2/Form';
 
 export default function Home() {
   const { lang, changeLanguage } = useI18n();
@@ -61,30 +62,28 @@ export default function Home() {
         />
       </div>
 
-      <div className={styles.subMain}>
-        {step === 'home' ? (
-          <>
-            {data.map((item, index) => (
-              <Button
-                onClick={() => onClick(item.path)}
-                key={index}
-                className={styles.boderItem}
-              >
-                <>
-                  {item.name}
-                  <p>{item.des}</p>
-                </>
-              </Button>
-            ))}
-          </>
-        ) : step === 'test1' ? (
-          <div>
-            <ShapeBoard />
-          </div>
-        ) : (
-          <div>Test 2</div>
-        )}
-      </div>
+      {step === 'home' ? (
+        <div className={styles.subMain}>
+          {data.map((item, index) => (
+            <Button
+              onClick={() => onClick(item.path)}
+              key={index}
+              className={styles.boderItem}
+            >
+              <>
+                {item.name}
+                <p>{item.des}</p>
+              </>
+            </Button>
+          ))}
+        </div>
+      ) : step === 'test1' ? (
+        <div className={styles.subMain}>
+          <ShapeBoard />
+        </div>
+      ) : (
+        <Form />
+      )}
     </div>
   );
 }

@@ -43,7 +43,18 @@
       justify-content: center;
       height: 110px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      position: relative;
 
+      .test-box {
+        background: #6eda78;
+        border-radius: 12px;
+        position: absolute;
+        top: 2/2;
+        transform: translate(-20%, 0%);
+        width: 100px;
+        padding: 10px;
+        font-size: 14px;
+      }
       .shape {
         background-color: #666;
         width: 60px;
@@ -57,22 +68,6 @@
           border-right: 50px solid #666;
           background: none;
         }
-        &.triangleup {
-          width: 0;
-          height: 0;
-          border-left: 30px solid transparent;
-          border-right: 30px solid transparent;
-          border-bottom: 50px solid #666;
-          background: none;
-        }
-        &.triangledown {
-          width: 0;
-          height: 0;
-          border-left: 30px solid transparent;
-          border-right: 30px solid transparent;
-          border-top: 50px solid #666;
-          background: none;
-        }
         &.triangleright {
           width: 0;
           height: 0;
@@ -82,6 +77,67 @@
           background: none;
         }
       }
+    }
+    .shape-box:hover {
+      background-color: #ffa200;
+      cursor: pointer;
+    }
+    .shape-group {
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 110px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      grid-column: span 2;
+      position: relative;
+
+      .test-box {
+        background: #6eda78;
+        border-radius: 12px;
+        position: absolute;
+        width: 120px;
+        padding: 10px;
+        font-size: 14px;
+        text-align: center;
+        bottom: -10px;
+      }
+      .divshape {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        .shape {
+          background-color: #666;
+          width: 120px;
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          &.triangleup {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid #666;
+            background: none;
+            border-radius: 8px;
+          }
+          &.triangledown {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-top: 50px solid #666;
+            background: none;
+          }
+        }
+      }
+    }
+    .shape-group:hover {
+      background-color: #ffa200;
+      cursor: pointer;
     }
   }
 

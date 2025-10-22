@@ -1,0 +1,13 @@
+.container {
+  padding: 16px;
+  border-radius: 8px;
+  min-height: 100vh;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}

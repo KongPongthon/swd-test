@@ -1,6 +1,7 @@
 .page {
   font-family: var(--font-geist-sans);
   background: linear-gradient(to right, #6eda78, #ffa200);
+  min-height: 100vh;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,20 +17,18 @@
 
 .main {
   display: flex;
-  /* flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2; */
-  /* justify-content: end; */
   justify-content: space-between;
+  padding: 20px;
+  height: 150px;
 }
 
 .subMain {
+  width: 100%;
+  min-height: calc(100vh - 150px);
   display: flex;
   gap: 10px;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100vh;
 }
 
 .boderItem {

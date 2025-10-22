@@ -1,6 +1,7 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './Shape.module.css';
+import i18next from 'i18next';
 
 const initialShapes = [
   'oval',
@@ -34,48 +35,48 @@ export default function ShapeBoard() {
     setShapes(newShapes);
   };
 
+  const shuffleShapes = () => {
+    const shuffled = [...shapes].sort(() => Math.random() - 0.5);
+    setShapes(shuffled);
+  };
+
   return (
     <div className={styles['shape-board']}>
       <div className={styles.controls}>
         <div className={styles['shape-box']} onClick={() => moveShape('left')}>
-          <div className={`${styles.shape} ${styles.triangleleft}`} />
+          <div>
+            <div className={`${styles.shape} ${styles.triangleleft}`} />
+            <div className={styles['test-box']}>{i18next.t('moveshape')}</div>
+          </div>
         </div>
-        <div className={styles['shape-box']} onClick={() => moveShape('up')}>
-          <div className={`${styles.shape} ${styles.triangleup}`} />
-        </div>
-        <div className={styles['shape-box']} onClick={() => moveShape('down')}>
-          <div className={`${styles.shape} ${styles.triangledown}`} />
+        <div className={styles['shape-group']} onClick={() => moveShape('up')}>
+          <div className={styles['divshape']}>
+            <div className={`${styles.shape} ${styles.triangleup}`} />
+          </div>
+          <div className={styles['divshape']}>
+            <div className={`${styles.shape} ${styles.triangledown}`} />
+          </div>
+          <div className={styles['test-box']}>{i18next.t('moveposition')}</div>
         </div>
         <div className={styles['shape-box']} onClick={() => moveShape('right')}>
-          <div className={`${styles.shape} ${styles.triangleright}`} />
+          <div>
+            <div className={`${styles.shape} ${styles.triangleright}`} />
+            <div className={styles['test-box']}>{i18next.t('moveshape')}</div>
+          </div>
         </div>
       </div>
 
       <div className={styles['shape-grid']}>
         <div></div>
         {shapes.map((shape, index) => (
-          <div className={styles['shape-box']} key={index}>
+          <div
+            className={styles['shape-box']}
+            key={index}
+            onClick={shuffleShapes}
+          >
             <div className={`${styles.shape} ${styles[shape]}`} />
           </div>
         ))}
-        {/* <div className={styles['shape-box']}>
-          <div className={`${styles.shape} ${styles.oval}`} />
-        </div>
-        <div className={styles['shape-box']}>
-          <div className={`${styles.shape} ${styles.circle}`} />
-        </div>
-        <div className={styles['shape-box']}>
-          <div className={`${styles.shape} ${styles.rectangle}`} />
-        </div>
-        <div className={styles['shape-box']}>
-          <div className={`${styles.shape} ${styles.parallelogram}`} />
-        </div>
-        <div className={styles['shape-box']}>
-          <div className={`${styles.shape} ${styles.square}`} />
-        </div>
-        <div className={styles['shape-box']}>
-          <div className={`${styles.shape} ${styles.trapezoid}`} />
-        </div> */}
       </div>
     </div>
   );
