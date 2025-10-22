@@ -73,10 +73,19 @@ const UserTable: React.FC = () => {
       title: i18next.t('manage'),
       render: () => (
         <>
-          <Button type='link' style={{ padding: 0 }}>
+          <Button
+            type='link'
+            className={styles['button']}
+            style={{ padding: 0 }}
+          >
             {i18next.t('edit')}
           </Button>
-          <Button type='link' danger style={{ padding: 0, marginLeft: 8 }}>
+          <Button
+            type='link'
+            className={styles['button']}
+            danger
+            style={{ padding: 0, marginLeft: 8 }}
+          >
             {i18next.t('delete')}
           </Button>
         </>

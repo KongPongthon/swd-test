@@ -11,3 +11,8 @@
   align-items: center;
   margin-bottom: 8px;
 }
+
+.button {
+  cursor: pointer !important;
+  color: #666 !important;
+}
