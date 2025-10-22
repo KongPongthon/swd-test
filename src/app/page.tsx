@@ -35,14 +35,18 @@ export default function Home() {
           {step === 'home' && <></>}
           {step === 'test1' && (
             <div>
-              <h1>Layout & style</h1>
-              <Button onClick={() => onClick('home')}>← กลับ</Button>
+              <h1>{i18next.t('title1')}</h1>
+              <Button onClick={() => onClick('home')}>
+                ← {i18next.t('back')}
+              </Button>
             </div>
           )}
           {step === 'test2' && (
             <div>
-              <h1>Form & Table</h1>
-              <Button onClick={() => onClick('home')}>← กลับ</Button>
+              <h1>{i18next.t('title2')}</h1>
+              <Button onClick={() => onClick('home')}>
+                ← {i18next.t('back')}
+              </Button>
             </div>
           )}
         </div>

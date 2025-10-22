@@ -1,9 +1,13 @@
 import i18next from 'i18next';
 
-let initialLang = 'en';
-if (typeof window !== 'undefined') {
-  const saved = localStorage.getItem('lang');
-  if (saved) initialLang = saved;
+let initialLang;
+
+const saved = localStorage.getItem('lang');
+if (saved) {
+  initialLang = saved;
+} else {
+  initialLang = 'en';
+  localStorage.setItem('lang', 'en');
 }
 
 i18next.init({
@@ -20,6 +24,9 @@ i18next.init({
             path: 'test2',
           },
         ],
+        back: 'Back',
+        test1: 'Layout & style',
+        test2: 'Form & Table',
       },
     },
     th: {
@@ -32,6 +39,9 @@ i18next.init({
             path: 'test2',
           },
         ],
+        back: 'ย้อนกลับ',
+        test1: 'การจัดการหน้าเว็บ',
+        test2: 'การจัดการหน้าฟอร์ม',
       },
     },
   },
