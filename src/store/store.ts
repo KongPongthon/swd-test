@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import formSlice from './formSlice';
+import userListSlice from './userListSlice';
 
 export const store = configureStore({
   reducer: {
     form: formSlice,
+    userList: userListSlice,
   },
 });
 

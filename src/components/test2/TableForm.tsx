@@ -1,91 +1,60 @@
 import React, { useState } from 'react';
 import { Table, Button, Checkbox } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import styles from './Table.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import { FormState } from '@/store/formSlice';
+import { updateForm } from '@/store/formSlice';
+import { deleteUser } from '@/store/userListSlice';
 import i18next from 'i18next';
-
-interface UserData {
-  key: string;
-  name: string;
-  gender: string;
-  mobile: string;
-  nationality: string;
-}
-type GenderKey = 'male' | 'female' | 'other';
-
+import styles from './Table.module.css';
 const UserTable: React.FC = () => {
+  const dispatch = useDispatch();
+  const tableData = useSelector((state: RootState) => state.userList.users);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-  const data: UserData[] = [
-    {
-      key: '1',
-      name: 'test12 test12',
-      gender: 'male',
-      mobile: '+660123456789',
-      nationality: 'Thai',
-    },
-    {
-      key: '2',
-      name: 'test12 test12',
-      gender: 'male',
-      mobile: '+660123456789',
-      nationality: 'Thai',
-    },
-    {
-      key: '3',
-      name: 'test12 test12',
-      gender: 'male',
-      mobile: '+660123456789',
-      nationality: 'Thai',
-    },
-    {
-      key: '4',
-      name: 'test12 test12',
-      gender: 'male',
-      mobile: '+660123456789',
-      nationality: 'Thai',
-    },
-  ];
   const genderOptionObj = i18next.t('genders', {
     returnObjects: true,
-  }) as Record<GenderKey, string>;
+  }) as Record<string, string>;
 
-  const columns: ColumnsType<UserData> = [
+  const handleDelete = (data: FormState) => {
+    dispatch(deleteUser(data.id!));
+  };
+
+  const handleDeleteArray = (data: React.Key[]) => {
+    data.forEach((d) => {
+      dispatch(deleteUser(d as string));
+    });
+  };
+
+  const handleEdit = (data: FormState) => {
+    dispatch(updateForm(data));
+  };
+
+  const columns = [
     {
       title: i18next.t('name'),
-      dataIndex: 'name',
-      sorter: true,
+      render: (_: any, record: FormState) =>
+        `${record.firstname} ${record.lastname}`,
+      sorter: (a: FormState, b: FormState) =>
+        `${a.firstname} ${a.lastname}`.localeCompare(
+          `${b.firstname} ${b.lastname}`
+        ),
     },
     {
       title: i18next.t('gender'),
       dataIndex: 'gender',
-      render: (value: GenderKey) => genderOptionObj[value] || value,
+      render: (value: string) => genderOptionObj[value] || value,
     },
-    {
-      title: i18next.t('mobile'),
-      dataIndex: 'mobile',
-    },
-    {
-      title: i18next.t('nationality'),
-      dataIndex: 'nationality',
-    },
+    { title: i18next.t('mobile'), dataIndex: 'mobile' },
+    { title: i18next.t('nationality'), dataIndex: 'nationality' },
     {
       title: i18next.t('manage'),
-      render: () => (
+      render: (_: any, record: FormState) => (
         <>
-          <Button
-            type='link'
-            className={styles['button']}
-            style={{ padding: 0 }}
-          >
+          <Button type='link' onClick={() => handleEdit(record)}>
             {i18next.t('edit')}
           </Button>
-          <Button
-            type='link'
-            className={styles['button']}
-            danger
-            style={{ padding: 0, marginLeft: 8 }}
-          >
+          <Button type='link' danger onClick={() => handleDelete(record)}>
             {i18next.t('delete')}
           </Button>
         </>
@@ -93,21 +62,18 @@ const UserTable: React.FC = () => {
     },
   ];
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: (newSelectedRowKeys: React.Key[]) => {
-      setSelectedRowKeys(newSelectedRowKeys);
-    },
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.actions}>
         <Checkbox
-          checked={selectedRowKeys.length === data.length}
+          checked={selectedRowKeys.length === tableData.length}
           onChange={(e) => {
             setSelectedRowKeys(
-              e.target.checked ? data.map((item) => item.key) : []
+              e.target.checked
+                ? (tableData
+                    .map((item) => item.id)
+                    .filter(Boolean) as React.Key[])
+                : []
             );
           }}
         >
@@ -117,15 +83,21 @@ const UserTable: React.FC = () => {
           danger
           disabled={selectedRowKeys.length === 0}
           style={{ marginLeft: 8 }}
+          onClick={() => handleDeleteArray(selectedRowKeys)}
         >
           {i18next.t('delete')}
         </Button>
       </div>
 
       <Table
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
+        rowSelection={{
+          selectedRowKeys,
+          onChange: setSelectedRowKeys,
+        }}
         columns={columns}
-        dataSource={data}
+        dataSource={tableData}
+        rowKey='id'
         pagination={{
           pageSize: 2,
           showPrevNextJumpers: true,

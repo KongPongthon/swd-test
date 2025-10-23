@@ -1,78 +1,65 @@
 'use client';
-import { Button, DatePicker, Input, Select } from 'antd';
+import { Button, DatePicker, Input, Radio, Select } from 'antd';
 import styles from './Form.module.css';
 import i18next from 'i18next';
-import App from './TableForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormState, resetForm, updateField } from '@/store/formSlice';
 import type { RootState } from '@/store/store';
-import CitizenInput from '../CitizenInput';
-import MobileInput from '../MobileInput';
 const citizenLengths = [1, 4, 5, 2, 1];
 import moment, { Moment } from 'moment';
+import React, { useState } from 'react';
+import { addUser, updateUser } from '@/store/userListSlice';
 
 const Form = () => {
   const dispatch = useDispatch();
   const form = useSelector((state: RootState) => state.form);
-  const titleOptionObj = i18next.t('titles', { returnObjects: true });
-  const selectOptions = Object.entries(titleOptionObj).map(([key, label]) => ({
-    value: key,
-    label,
-  }));
-
-  const titleOtionObj = i18next.t('genders', { returnObjects: true });
-  const genderOption = Object.entries(titleOtionObj);
-
-  const nationOptionObj = i18next.t('nationalityOption', {
-    returnObjects: true,
-  });
-  console.log('nationOptionObj', nationOptionObj);
-
-  const nationOption = Object.entries(nationOptionObj).map(([key, label]) => ({
-    value: key,
-    label,
-  }));
+  const [mobilePrefix, setMobilePrefix] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
 
   const handleSubmit = () => {
-    // ดึงข้อมูลเก่า
-    const savedData = localStorage.getItem('formData');
-    const parsedData = savedData ? JSON.parse(savedData) : [];
-    const dataArray = Array.isArray(parsedData) ? parsedData : [parsedData];
-    dataArray.push(form);
-    localStorage.setItem('formData', JSON.stringify(dataArray));
-    console.log('Updated localStorage:', dataArray);
+    const newForm: FormState = {
+      ...form,
+      id: form.id || Math.random().toString(36).substr(2, 9),
+    };
+
+    if (form.id) {
+      dispatch(updateUser(newForm));
+    } else {
+      dispatch(addUser(newForm));
+    }
+
     dispatch(resetForm());
+    setMobilePrefix('');
+    setMobileNumber('');
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const { value, name } = e.target;
-      // console.log('value', value, 'name', name);
-      dispatch(updateField({ key: name as keyof FormState, value: value }));
-    } catch (error) {
-      console.log(error);
-    }
+    const { name, value } = e.target;
+    dispatch(updateField({ key: name as keyof FormState, value }));
   };
-  const citizen = useSelector((state: RootState) => state.form.citizen);
 
-  const parts: Array<string> = [];
+  const citizen = form.citizen || '';
+  const parts: string[] = [];
   let start = 0;
   for (let len of citizenLengths) {
-    if (typeof citizen === 'string') {
-      parts.push(citizen.substr(start, len));
-      start += len;
-    }
+    parts.push(citizen.substr(start, len));
+    start += len;
   }
 
   const handleChange = (index: number, value: string) => {
     if (value.length > citizenLengths[index]) return;
     const newParts = [...parts];
     newParts[index] = value;
-    const newCitizen = newParts.join('');
-    dispatch(updateField({ key: 'citizen', value: newCitizen }));
+    dispatch(updateField({ key: 'citizen', value: newParts.join('') }));
   };
 
-  console.log('Form', form);
+  const handleMobileChange = () => {
+    dispatch(
+      updateField({ key: 'mobile', value: `${mobilePrefix}${mobileNumber}` })
+    );
+  };
+
+  // console.log('Form', form);
 
   return (
     <>
@@ -84,35 +71,36 @@ const Form = () => {
                 <div className={styles['required']}>*</div>
                 {i18next.t('title')}:
                 <Select
-                  placeholder={'title'}
-                  style={{ width: 150 }}
+                  value={form.title}
                   onChange={(value) =>
                     dispatch(updateField({ key: 'title', value }))
                   }
-                  value={form.title}
-                  options={selectOptions}
+                  options={Object.entries(
+                    i18next.t('titles', { returnObjects: true })
+                  ).map(([value, label]) => ({ value, label }))}
+                  style={{ width: 150 }}
                 />
               </div>
               <div className={styles['label']}>
                 <div className={styles['required']}>*</div>
                 {i18next.t('firstname')}:
                 <Input
-                  value={form.firstname}
-                  placeholder={'First name'}
-                  style={{ width: 460 }}
                   name='firstname'
+                  value={form.firstname}
                   onChange={onChange}
+                  placeholder='First name'
+                  style={{ width: 200 }}
                 />
               </div>
               <div className={styles['label']}>
                 <div className={styles['required']}>*</div>
                 {i18next.t('lastname')}:
                 <Input
-                  value={form.lastname}
                   name='lastname'
-                  placeholder={'Last name'}
-                  style={{ width: 460 }}
+                  value={form.lastname}
                   onChange={onChange}
+                  placeholder='Last name'
+                  style={{ width: 200 }}
                 />
               </div>
             </div>
@@ -121,19 +109,16 @@ const Form = () => {
                 <div className={styles['required']}>*</div>
                 {i18next.t('birthday')}:
                 <DatePicker
-                  needConfirm
-                  value={form.brithday ? moment(form.brithday) : null} // แปลงเป็น moment
-                  onChange={(value: Moment | null) => {
-                    const dateValue = value
-                      ? moment(value)
-                      : moment(new Date());
-                    console.log('dateValue', dateValue);
-
+                  value={form.brithday ? moment(form.brithday) : null}
+                  onChange={(value: Moment | null) =>
                     dispatch(
-                      updateField({ key: 'brithday', value: dateValue })
-                    );
-                  }}
-                  format='DD/MM/YYYY' // กำหนด format ที่ต้องการ
+                      updateField({
+                        key: 'brithday',
+                        value: value ? moment(value) : null,
+                      })
+                    )
+                  }
+                  format='DD/MM/YYYY'
                 />
               </div>
               <div className={styles['label']}>
@@ -141,12 +126,13 @@ const Form = () => {
                 {i18next.t('nationality')}:
                 <Select
                   value={form.nationality}
-                  placeholder={'-- Please select --'}
-                  style={{ width: 460 }}
-                  options={nationOption}
                   onChange={(value) =>
                     dispatch(updateField({ key: 'nationality', value }))
                   }
+                  options={Object.entries(
+                    i18next.t('nationalityOption', { returnObjects: true })
+                  ).map(([value, label]) => ({ value, label }))}
+                  style={{ width: 200 }}
                 />
               </div>
             </div>
@@ -182,48 +168,82 @@ const Form = () => {
             <div className={styles['group-text']}>
               <div className={styles['label']}>
                 {i18next.t('citizen')}:
-                <CitizenInput
-                  citizenLengths={citizenLengths}
-                  parts={parts}
-                  handleChange={handleChange}
-                />
+                {parts.map((part, i) => (
+                  <React.Fragment key={i}>
+                    <Input
+                      style={{ width: citizenLengths[i] * 40 }}
+                      maxLength={citizenLengths[i]}
+                      value={part}
+                      onChange={(e) => handleChange(i, e.target.value)}
+                    />
+                    {i < parts.length - 1 && <span>-</span>}
+                  </React.Fragment>
+                ))}
               </div>
             </div>
-            {/* <div className={styles['group-text']}>
+            <div className={styles['group-text']}>
               <div className={styles['label']}>
                 <div className={styles['required']}>*</div>
                 {i18next.t('gender')}:
+                <Radio.Group
+                  value={form.gender}
+                  onChange={(e) =>
+                    dispatch(
+                      updateField({ key: 'gender', value: e.target.value })
+                    )
+                  }
+                >
+                  {Object.entries(
+                    i18next.t('genders', { returnObjects: true })
+                  ).map(([value, label]) => (
+                    <Radio key={value} value={value}>
+                      {label}
+                    </Radio>
+                  ))}
+                </Radio.Group>
               </div>
-              <Radio.Group
-                onChange={(e) =>
-                  dispatch(
-                    updateField({ key: 'gender', value: e.target.value })
-                  )
-                }
-                value={form.gender} // value จาก state ที่เก็บค่าเพศ
-              >
-                {genderOption?.map(([value, label]) => (
-                  <Radio key={value} value={value} className={styles['label']}>
-                    {label}
-                  </Radio>
-                ))}
-              </Radio.Group>
-            </div> */}
+            </div>
             <div className={styles['group-text']}>
               <div className={styles['label']}>
                 <div className={styles['required']}>*</div>
                 {i18next.t('mobile')}:
-                <MobileInput />
+                <div className={styles['label']}>
+                  <Select
+                    style={{ width: 100 }}
+                    value={mobilePrefix}
+                    options={[
+                      { value: '+66', label: '+66' },
+                      { value: '+1', label: '+1' },
+                    ]}
+                    onChange={(value) => {
+                      setMobilePrefix(value);
+                      handleMobileChange();
+                    }}
+                  />
+                </div>
+                <div className={styles['label']}>-</div>
+                <div className={styles['label']}>
+                  <Input
+                    maxLength={8}
+                    value={mobileNumber}
+                    onChange={(e) => {
+                      setMobileNumber(e.target.value);
+                      handleMobileChange();
+                    }}
+                    style={{ width: 200 }}
+                  />
+                </div>
               </div>
             </div>
             <div className={styles['group-text']}>
               <div className={styles['label']}>
                 {i18next.t('passport')}:
                 <Input
-                  value={form.passport}
-                  style={{ width: 350 }}
                   name='passport'
+                  value={form.passport}
                   onChange={onChange}
+                  placeholder='Passport'
+                  style={{ width: 200 }}
                 />
               </div>
             </div>
@@ -232,10 +252,11 @@ const Form = () => {
                 <div className={styles['required']}>*</div>
                 {i18next.t('expected')}:
                 <Input
-                  value={form.expected}
-                  style={{ width: 300 }}
                   name='expected'
+                  value={form.expected}
                   onChange={onChange}
+                  placeholder='Expected'
+                  style={{ width: 200 }}
                 />
               </div>
               <div className={styles['label']} onClick={handleSubmit}>
@@ -247,9 +268,6 @@ const Form = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div>
-        <App />
       </div>
     </>
   );

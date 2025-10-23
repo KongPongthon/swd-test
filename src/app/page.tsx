@@ -5,7 +5,7 @@ import i18next from '@/lib/i18n';
 import { useI18n } from '@/hook/usei18n';
 import { useState } from 'react';
 import ShapeBoard from '../components/test1/ShapeBoard';
-import Form from '@/components/test2/Form';
+import FormData from '@/components/test2/FormData';
 
 export default function Home() {
   const { lang, changeLanguage } = useI18n();
@@ -82,7 +82,7 @@ export default function Home() {
           <ShapeBoard />
         </div>
       ) : (
-        <Form />
+        <FormData />
       )}
     </div>
   );

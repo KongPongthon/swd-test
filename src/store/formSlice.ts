@@ -11,10 +11,12 @@ export interface FormState {
   mobile: string;
   passport: string;
   expected: string;
+  id?: string;
   citizen?: string;
 }
 
 const initialState: FormState = {
+  id: '',
   title: '',
   firstname: '',
   lastname: '',
