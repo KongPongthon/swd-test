@@ -38,6 +38,11 @@ const th = {
     female: 'หญิง',
     other: 'อื่น ๆ',
   },
+  nationalityOption: {
+    thai: 'ไทย',
+    eng: 'อังกฤษ',
+    other: 'อื่น ๆ',
+  },
 };
 
 export default th;

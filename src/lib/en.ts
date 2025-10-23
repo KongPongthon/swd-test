@@ -38,6 +38,11 @@ const en = {
     female: 'Female',
     other: 'Other',
   },
+  nationalityOption: {
+    thai: 'Thai',
+    eng: 'English',
+    other: 'อื่น ๆ',
+  },
 };
 
 export default en;
