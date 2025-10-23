@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Moment } from 'moment';
 
 export interface FormState {
   title: string;
   firstname: string;
   lastname: string;
-  brithday: Moment | null;
+  brithday: string | null;
   nationality: string;
   gender: string;
   mobile: string;

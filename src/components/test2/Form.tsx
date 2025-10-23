@@ -6,10 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormState, resetForm, updateField } from '@/store/formSlice';
 import type { RootState } from '@/store/store';
 const citizenLengths = [1, 4, 5, 2, 1];
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import React, { useState } from 'react';
 import { addUser, updateUser } from '@/store/userListSlice';
-
 const Form = () => {
   const dispatch = useDispatch();
   const form = useSelector((state: RootState) => state.form);
@@ -58,9 +57,6 @@ const Form = () => {
       updateField({ key: 'mobile', value: `${mobilePrefix}${mobileNumber}` })
     );
   };
-
-  // console.log('Form', form);
-
   return (
     <>
       <div className={styles['form']}>
@@ -108,17 +104,19 @@ const Form = () => {
               <div className={styles['label']}>
                 <div className={styles['required']}>*</div>
                 {i18next.t('birthday')}:
-                <DatePicker
-                  value={form.brithday ? moment(form.brithday) : null}
-                  onChange={(value: Moment | null) =>
+                <Input
+                  type='date'
+                  value={form.brithday || ''} // string 'YYYY-MM-DD' ตรง ๆ
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     dispatch(
-                      updateField({
-                        key: 'brithday',
-                        value: value ? moment(value) : null,
-                      })
-                    )
-                  }
-                  format='DD/MM/YYYY'
+                      updateField({ key: 'brithday', value: e.target.value })
+                    );
+                  }}
+                  style={{
+                    fontSize: 16,
+                    backgroundColor: '#d7d7d7',
+                    width: 200,
+                  }}
                 />
               </div>
               <div className={styles['label']}>

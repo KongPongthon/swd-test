@@ -27,6 +27,8 @@ const UserTable: React.FC = () => {
   };
 
   const handleEdit = (data: FormState) => {
+    console.log('data', data);
+
     dispatch(updateForm(data));
   };
 
