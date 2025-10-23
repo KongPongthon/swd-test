@@ -23,8 +23,8 @@ const en = {
   // ----- Table ----
   name: 'Name',
   manage: 'Manage',
-  edit: 'Edit',
-  delete: 'Delete',
+  edit: 'EDIT',
+  delete: 'DELETE',
   prev: 'Prev',
   next: 'Next',
   // ----- Options -----
@@ -36,13 +36,18 @@ const en = {
   genders: {
     male: 'Male',
     female: 'Female',
-    other: 'Other',
+    unsex: 'Unsex',
   },
   nationalityOption: {
     thai: 'Thai',
     eng: 'English',
     other: 'อื่น ๆ',
   },
+  submit: 'SUBMIT',
+  reset: 'RESET',
+  select: 'Select All',
+  home: 'Home',
+  validate: 'Please fill fields',
 };
 
 export default en;

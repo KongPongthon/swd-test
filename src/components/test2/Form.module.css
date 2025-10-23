@@ -22,8 +22,8 @@
 @media screen and (min-width: 1920px) {
   .form {
     width: 100%;
-    padding-left: 250px;
-    padding-right: 250px;
+    padding-left: 400px;
+    padding-right: 400px;
     .sub-box {
       border: 1px solid black;
       padding: 10px;
@@ -40,6 +40,61 @@
           align-items: center;
           justify-content: center;
           margin-left: 10px;
+          color: black !important;
+          .required {
+            color: red;
+          }
+          .radio-flex {
+            display: flex;
+            gap: 10px;
+          }
+        }
+        .label1 {
+          display: flex;
+          white-space: nowrap;
+          width: auto;
+          gap: 10px;
+          align-items: center;
+          justify-content: center;
+          margin-left: 10px;
+          margin-right: 50px;
+          color: black !important;
+          .required {
+            color: red;
+          }
+          .radio-flex {
+            display: flex;
+            gap: 10px;
+          }
+        }
+        .label2 {
+          display: flex;
+          white-space: nowrap;
+          width: auto;
+          gap: 10px;
+          align-items: center;
+          justify-content: center;
+          margin-left: 10px;
+          margin-right: 200px;
+          color: black !important;
+          .required {
+            color: red;
+          }
+          .radio-flex {
+            display: flex;
+            gap: 10px;
+          }
+        }
+        .label3 {
+          display: flex;
+          white-space: nowrap;
+          width: auto;
+          gap: 10px;
+          align-items: center;
+          justify-content: center;
+          margin-left: 10px;
+          margin-right: 150px;
+          color: black !important;
           .required {
             color: red;
           }

@@ -12,6 +12,7 @@ export interface FormState {
   expected: string;
   id?: string;
   citizen?: string;
+  errors?: Partial<Record<keyof Omit<FormState, 'errors'>, string>>;
 }
 
 const initialState: FormState = {
@@ -26,26 +27,22 @@ const initialState: FormState = {
   passport: '',
   expected: '',
   citizen: '',
+  errors: {},
 };
 
 const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    // ✅ ใช้ update แบบ key-value เฉพาะ field เดียว
     updateField: <K extends keyof FormState>(
       state: FormState,
       action: PayloadAction<{ key: K; value: FormState[K] }>
     ) => {
       state[action.payload.key] = action.payload.value;
     },
-
-    // ✅ ใช้ update หลาย field พร้อมกัน
     updateForm: (state, action: PayloadAction<Partial<FormState>>) => {
       Object.assign(state, action.payload);
     },
-
-    // ✅ ล้างฟอร์มทั้งหมด
     resetForm: () => initialState,
   },
 });

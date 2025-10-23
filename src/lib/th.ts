@@ -23,8 +23,8 @@ const th = {
   // ----- Table ----
   name: 'ชื่อ - นามสกุล',
   manage: 'จัดการ',
-  edit: 'แก้ไข',
-  delete: 'ลบ',
+  edit: 'แก้ไขข้อมูล',
+  delete: 'ลบข้อมูล',
   prev: 'ก่อนหน้า',
   next: 'ถัดไป',
   // ----- Options -----
@@ -36,13 +36,18 @@ const th = {
   genders: {
     male: 'ชาย',
     female: 'หญิง',
-    other: 'อื่น ๆ',
+    unsex: 'ไม่ระบุ',
   },
   nationalityOption: {
     thai: 'ไทย',
     eng: 'อังกฤษ',
     other: 'อื่น ๆ',
   },
+  submit: 'ส่งข้อมูล',
+  reset: 'ล้างข้อมูล',
+  select: 'เลือกทั้งหมด',
+  home: 'หน้าหลัก',
+  validate: 'กรุณากรอกข้อมูลในช่อง',
 };
 
 export default th;

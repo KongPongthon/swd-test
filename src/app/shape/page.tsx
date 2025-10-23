@@ -1,13 +1,14 @@
 'use client';
 import { Button, Select } from 'antd';
-import styles from './page.module.css';
+import styles from '@/app/page.module.css';
 import i18next from '@/lib/i18n';
 import { useI18n } from '@/hook/usei18n';
 import { resetForm } from '@/store/formSlice';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import ShapeBoard from '@/components/test1/ShapeBoard';
 
-export default function Home() {
+const Shape = () => {
   const { lang, changeLanguage } = useI18n();
   const dispatch = useDispatch();
   const handleChange = (value: string) => {
@@ -32,12 +33,6 @@ export default function Home() {
     }
   };
 
-  const data = i18next.t('data', { returnObjects: true }) as {
-    name: string;
-    des: string;
-    path: 'home' | 'test1' | 'test2';
-  }[];
-
   if (!lang) {
     return <div>Loading...</div>;
   }
@@ -46,7 +41,11 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <div className={styles.main}>
-        <div></div>
+        <div>
+          <div>
+            <h1>{i18next.t('title1')}</h1>
+          </div>
+        </div>
         <div className={styles.lang}>
           <Select
             defaultValue={lang}
@@ -62,20 +61,9 @@ export default function Home() {
           </Button>
         </div>
       </div>
-      <div className={styles.subMain}>
-        {data.map((item, index) => (
-          <Button
-            onClick={() => onClick(item.path)}
-            key={index}
-            className={styles.boderItem}
-          >
-            <>
-              {item.name}
-              <p>{item.des}</p>
-            </>
-          </Button>
-        ))}
-      </div>
+      <ShapeBoard />
     </div>
   );
-}
+};
+
+export default Shape;
